@@ -17,7 +17,6 @@ export default function Customerlist(props) {
 		fetch('https://traineeapp.azurewebsites.net/api/customers')
 			.then(response => response.json())
 			.then(data => setCustomers(data.content))
-			.then(data => props.setTrainings(data.content.data._links.trainings.href))
 			.catch(err => console.error(err))
 	}
 
@@ -77,7 +76,7 @@ export default function Customerlist(props) {
 			width: 100,
 			cellRenderer: (link) => (
 				<Button
-					onClick={() => deleteCustomer(link.data.links[1].href)}
+					onClick={() => deleteCustomer(link.links[1].self.href)}
 					variant="contained"
 					color="secondary"
 				>
