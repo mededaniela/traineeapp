@@ -1,7 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
 import Customerlist from './components/Customerlist';
-import { Link, Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Trainingslist from './components/Trainingslist';
 import Home from './components/Home';
 import Nav from './components/Nav';

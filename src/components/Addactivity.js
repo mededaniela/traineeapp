@@ -10,7 +10,6 @@ import { useState } from 'react';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 export default function Addactivity(props) {
-	const [date, setDate] = useState(new Date().toISOString());
 	const [open, setOpen] = React.useState(false);
 	const [training, setTraining] = React.useState({ date: '', duration: '', activity: '', customer: '' });
 

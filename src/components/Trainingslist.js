@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
-import Addactivity from './Addactivity';
 import { Button } from '@mui/material';
 
 export default function Trainingslist() {
