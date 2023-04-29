@@ -5,6 +5,7 @@ import { Link, Route, Routes, BrowserRouter } from 'react-router-dom';
 import Trainingslist from './components/Trainingslist';
 import Home from './components/Home';
 import Nav from './components/Nav';
+import TrainingsCalendar from './components/Calendar';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route path="/customerlist" element={<Customerlist />} />
           <Route path="/trainingslist" element={<Trainingslist />} />
+          <Route path="/calendar" element={<TrainingsCalendar />} />
         </Routes>
       </BrowserRouter>
       <Nav />

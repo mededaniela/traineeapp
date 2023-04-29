@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
@@ -6,6 +6,7 @@ import Addcustomer from './Addcustomer';
 import Editcustomer from './Editcustomer';
 import { Button } from '@mui/material';
 import Addactivity from './Addactivity';
+import CsvDownload from 'react-csv-downloader';
 
 export default function Customerlist(props) {
 	const [customers, setCustomers] = useState([]);
@@ -20,6 +21,27 @@ export default function Customerlist(props) {
 			.then(data => setCustomers(data.content))
 			.catch(err => console.error(err))
 	}
+
+	const CsvHeaders = [
+		{ key: "firstname", label: "First name" },
+		{ key: "lastname", label: "Last name" },
+		{ key: "streetaddress", label: "Street address"},
+		{ key: "postcode", label: "Postcode" },
+		{ key: "city", label: "City" },
+		{ key: "email", label: "Email"},
+		{ key: "phone", label: "Phone"}
+	]
+
+	const CsvContent = customers.map((customer => ({
+		firstname: customer.firstname,
+		lastname: customer.lastname,
+		streetaddress: customer.streetaddress,
+		postcode: customer.postcode,
+		city: customer.city,
+		email: customer.email,
+		phone: customer.phone
+	})));
+
 
 	const saveCustomer = (customer) => {
 		fetch("https://traineeapp.azurewebsites.net/api/customers", {
@@ -118,6 +140,15 @@ export default function Customerlist(props) {
 	return (
 		<div>
 			<Addcustomer saveCustomer={saveCustomer} />
+
+			<button className="btn download-report-btn">
+			<CsvDownload 
+			datas={CsvContent}
+			separator=', '
+			headers={CsvHeaders}
+			filename="Customerlist">Download Report</CsvDownload>
+			</button>
+
 			<div className="ag-theme-material"
 				style={{ height: '700px', width: '70%', margin: 'auto' }} >
 				<AgGridReact
