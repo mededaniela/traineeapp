@@ -5,6 +5,7 @@ import 'ag-grid-community/styles/ag-theme-material.css';
 import Addcustomer from './Addcustomer';
 import Editcustomer from './Editcustomer';
 import { Button } from '@mui/material';
+import Addactivity from './Addactivity';
 
 export default function Customerlist(props) {
 	const [customers, setCustomers] = useState([]);
@@ -52,6 +53,19 @@ export default function Customerlist(props) {
 			.catch((err) => console.error(err));
 	}
 
+	function addTraining(training) {
+		fetch('https://traineeapp.azurewebsites.net/api/trainings', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(training)
+		})
+			.then(res => fetchData())
+			.catch(err => console.log(err))
+	}
+
+
 
 	const columns = [
 		{ headerName: "First name", field: "firstname", sortable: true, filter: true },
@@ -64,9 +78,10 @@ export default function Customerlist(props) {
 		{
 			width: 100,
 			cellRenderer: (link) => (
-				<Editcustomer updateCustomer={updateCustomer} customer={link.data} 
-				variant="contained"
-				color="secondary"
+				<Editcustomer updateCustomer={updateCustomer} customer={link.data}
+					variant="contained"
+					color="secondary"
+					size="small"
 				>
 					Edit
 				</Editcustomer>
@@ -79,17 +94,30 @@ export default function Customerlist(props) {
 					onClick={() => deleteCustomer(link.links[1].self.href)}
 					variant="contained"
 					color="secondary"
+					size="small"
 				>
 					Delete
 				</Button>
 			),
 		},
+		{
+			width: 100,
+			cellRenderer: (link) => (
+				<Addactivity addTraining={addTraining} customer={link.data}
+					variant="contained"
+					color="secondary"
+					size="small"
+				>
+					Add training
+				</Addactivity>
+			),
+		}
 	]
 
 
 	return (
 		<div>
-				<Addcustomer saveCustomer={saveCustomer} />
+			<Addcustomer saveCustomer={saveCustomer} />
 			<div className="ag-theme-material"
 				style={{ height: '700px', width: '70%', margin: 'auto' }} >
 				<AgGridReact

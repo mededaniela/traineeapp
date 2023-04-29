@@ -12,10 +12,11 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 export default function Addactivity(props) {
 	const [date, setDate] = useState(new Date().toISOString());
 	const [open, setOpen] = React.useState(false);
-	const [training, setTraining] = React.useState({ date: '', duration: '', activity: '' });
+	const [training, setTraining] = React.useState({ date: '', duration: '', activity: '', customer: '' });
 
 
 	const handleClickOpen = () => {
+		setTraining({ ...training, duration: '', customer: props.customer.links[0].href })
 		setOpen(true);
 	}
 
@@ -27,20 +28,20 @@ export default function Addactivity(props) {
 		setTraining({ ...training, [event.target.name]: event.target.value })
 	}
 
-	const addTraining = () => {
-		props.saveTraining(training);
+	const saveTraining = () => {
+		props.addTraining(training);
 		handleClose();
 	}
 
 	const [selectedDate, handleDateChange] = useState(new Date());
 
-	const yourChangeDateFunc = (date) => {
-        handleDateChange(date);
-        const formatDate = date.toISOString();
-        setTraining({...training, date: formatDate});
-    }
+	const ChangeDateFunc = (date) => {
+		handleDateChange(date);
+		const formatDate = date.toISOString();
+		setTraining({ ...training, date: formatDate });
+	}
 
-	
+
 
 	return (
 		<div>
@@ -50,15 +51,15 @@ export default function Addactivity(props) {
 			<Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
 				<DialogTitle id="form-dialog-title">Add training</DialogTitle>
 				<DialogContent>
-				<LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DateTimePicker 
-                    label="Date" 
-                    margin="dense" 
-                    value={selectedDate} 
-                    name="date" 
-                    onChange={date => yourChangeDateFunc(date)}
-                />
-            </LocalizationProvider>
+					<LocalizationProvider dateAdapter={AdapterDateFns}>
+						<DateTimePicker
+							label="Date"
+							margin="dense"
+							value={selectedDate}
+							name="date"
+							onChange={date => ChangeDateFunc(date)}
+						/>
+					</LocalizationProvider>
 					<TextField
 						autoFocus
 						margin="dense"
@@ -82,7 +83,7 @@ export default function Addactivity(props) {
 					<Button onClick={handleClose} color="primary">
 						Cancel
 					</Button>
-					<Button onClick={addTraining} color="primary">
+					<Button onClick={saveTraining} color="primary">
 						Save
 					</Button>
 				</DialogActions>

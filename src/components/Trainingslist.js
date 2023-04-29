@@ -7,7 +7,6 @@ import { Button } from '@mui/material';
 
 export default function Trainingslist() {
 	const [trainings, setTrainings] = useState([]);
-	const [trainingid, setId] = useState("id");
 
 	const gridRef = useRef();
 
@@ -18,18 +17,6 @@ export default function Trainingslist() {
 			.then(response => response.json())
 			.then(data => setTrainings(data))
 			.catch(err => console.error(err))
-	};
-
-	const saveTraining = (training) => {
-		fetch("https://traineeapp.azurewebsites.net/api/trainings", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(training),
-		})
-			.then((response) => fetchData())
-			.catch((err) => console.error(err));
 	};
 
 	const deleteTraining = (link) => {
@@ -78,7 +65,6 @@ export default function Trainingslist() {
 
 	return (
 		<div>
-			<Addactivity saveTraining={saveTraining} />
 			<div className="ag-theme-material"
 				style={{ height: '700px', width: '70%', margin: 'auto' }} >
 				<AgGridReact
