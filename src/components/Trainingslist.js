@@ -7,13 +7,14 @@ import { Button } from '@mui/material';
 
 export default function Trainingslist() {
 	const [trainings, setTrainings] = useState([]);
+	const [trainingid, setId] = useState("id");
 
 	const gridRef = useRef();
 
 	useEffect(() => fetchData(), []);
 
 	const fetchData = () => {
-		fetch('http://traineeapp.azurewebsites.net/gettrainings')
+		fetch('https://traineeapp.azurewebsites.net/gettrainings/')
 			.then(response => response.json())
 			.then(data => setTrainings(data))
 			.catch(err => console.error(err))
@@ -33,10 +34,11 @@ export default function Trainingslist() {
 
 	const deleteTraining = (link) => {
 		if (window.confirm("Are you sure?")) {
-			fetch(link,
+			fetch('https://traineeapp.azurewebsites.net/api/trainings/' + link,
 				{ method: 'DELETE' })
 				.then(response => fetchData())
 				.catch(err => console.error(err))
+
 		};
 	};
 
@@ -58,14 +60,19 @@ export default function Trainingslist() {
 		{ headerName: "Customer's last name", field: "customer.lastname", sortable: true, filter: true },
 		{
 			width: 100,
-			cellRenderer: (link) =>
-				<Button color="secondary"
+			headerName: '',
+			field: "id",
+			cellRenderer: (params) => (
+				<Button
+					onClick={() => deleteTraining(params.value)}
 					variant="contained"
 					size="small"
-					onClick={() => deleteTraining(link)}>
+					color="secondary"
+				>
 					Delete
 				</Button>
-		},
+			),
+	},
 	]
 
 
