@@ -5,6 +5,7 @@ import Trainingslist from './components/Trainingslist';
 import Home from './components/Home';
 import Nav from './components/Nav';
 import TrainingsCalendar from './components/Calendar';
+import TrainingCharts from './components/Charts';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/customerlist" element={<Customerlist />} />
           <Route path="/trainingslist" element={<Trainingslist />} />
           <Route path="/calendar" element={<TrainingsCalendar />} />
+          <Route path="/charts" element={<TrainingCharts />} />
         </Routes>
       </BrowserRouter>
       <Nav />
